@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <title>Todo-list</title>
+</head>
+<body>
+   <div class="glassy-box">
+         <h1>Todo List</h1>
+         <form action="/add" method="POST" onsubmit="return validateForm()">
+              <input type="text" id="task" name="task" placeholder="Enter task">
+              <button type="submit" class="submit">Add</button>
+         </form>
+         <script>
+             function validateForm() {
+                 var task = document.getElementById('task').value;
+                 if (task.trim() === "") {
+                     alert("Task cannot be empty");
+                     return false;
+                 }
+                 return true;
+             }
+         </script>
+        <div class="">
+            <ul>
+                <% for(let i = 0; i < items_ejs.length; i++) { %>
+                    <ol>
+                        <input type="checkbox" onclick="this.nextElementSibling.style.textDecoration = this.checked ? 'line-through' : 'none';">
+                        <span><%= (i + 1) + ". " + items_ejs[i] %></span>
+                    </ol>
+                <% } %>
+            </ul>
+        </div>
+   </div>
+</body>
+</html>
