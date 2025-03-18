@@ -8,6 +8,7 @@
     <title>Todo-list</title>
 </head>
 <body>
+   
    <div class="glassy-box">
          <h1>Todo List</h1>
          <form action="/add" method="POST" onsubmit="return validateForm()">
@@ -28,8 +29,21 @@
             <ul>
                 <% for(let i = 0; i < items_ejs.length; i++) { %>
                     <ol>
-                        <input type="checkbox" onclick="this.nextElementSibling.style.textDecoration = this.checked ? 'line-through' : 'none';">
-                        <span><%= (i + 1) + ". " + items_ejs[i] %></span>
+                        <form action="/delete" method="POST" id="deleteForm-<%= i %>">
+                            <input type="hidden" name="id" value="<%= items_ejs[i]._id %>">
+                            <button type="submit" class="delete" style="display: none;">Delete</button>
+                            <input type="checkbox" name="" onclick="deleteRow(this, <%= i %>)">
+                            <span><%= (i + 1) + ". " + items_ejs[i].name %></span>
+                        </form>
+                    </ol>
+                    <script>
+                        function deleteRow(checkbox, index) {
+                            if (checkbox.checked) {
+                                const form = document.getElementById(`deleteForm-${index}`);
+                                form.submit();
+                            }
+                        }
+                    </script>
                     </ol>
                 <% } %>
             </ul>
