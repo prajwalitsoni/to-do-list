@@ -8,8 +8,16 @@
     <title>Todo-list</title>
 </head>
 <body>
-   
-   <div class="glassy-box">
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/logout"><button class="logout-button">Logout</button></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="glassy-box">
          <h1>Todo List</h1>
          <form action="/add" method="POST" onsubmit="return validateForm()">
               <input type="text" id="task" name="task" placeholder="Enter task">
@@ -24,27 +32,25 @@
                  }
                  return true;
              }
+
+             function deleteRow(checkbox, index) {
+                 if (checkbox.checked) {
+                     const form = document.getElementById(`deleteForm-${index}`);
+                     form.submit();
+                 }
+             }
          </script>
         <div class="">
             <ul>
                 <% for(let i = 0; i < items_ejs.length; i++) { %>
-                    <ol>
+                    <li>
                         <form action="/delete" method="POST" id="deleteForm-<%= i %>">
                             <input type="hidden" name="id" value="<%= items_ejs[i]._id %>">
                             <button type="submit" class="delete" style="display: none;">Delete</button>
                             <input type="checkbox" name="" onclick="deleteRow(this, <%= i %>)">
                             <span><%= (i + 1) + ". " + items_ejs[i].name %></span>
                         </form>
-                    </ol>
-                    <script>
-                        function deleteRow(checkbox, index) {
-                            if (checkbox.checked) {
-                                const form = document.getElementById(`deleteForm-${index}`);
-                                form.submit();
-                            }
-                        }
-                    </script>
-                    </ol>
+                    </li>
                 <% } %>
             </ul>
         </div>
